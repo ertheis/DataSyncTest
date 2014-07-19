@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNDelegate {
     
     var pubKey = "demo"
     var subKey = "demo"
-    var authKey = "demo"
+    var authKey = ""
     
     func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
         PubNub.setDelegate(self)

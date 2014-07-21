@@ -36,13 +36,13 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func resetConnection(sender: AnyObject) {
-        PubNub.stopObjectSynchronization("ericHouse")
+        PubNub.stopObjectSynchronization(appDelegate.sync_db)
         PubNub.disconnect()
         
         var myConfig = PNConfiguration(forOrigin: "pubsub-beta.pubnub.com", publishKey: appDelegate.pubKey, subscribeKey: appDelegate.subKey, secretKey: nil, authorizationKey: appDelegate.authKey)
         PubNub.setConfiguration(myConfig)
         
         PubNub.connect()
-        PubNub.startObjectSynchronization("ericHouse")
+        PubNub.startObjectSynchronization(appDelegate.sync_db)
     }
 }

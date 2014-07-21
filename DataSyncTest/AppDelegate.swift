@@ -13,9 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNDelegate {
     
     var window: UIWindow?
     
-    var pubKey = "pub-c-bf446f9e-dd7f-43fe-8736-d6e5dce3fe67"
-    var subKey = "sub-c-d1c2cc5a-1102-11e4-8880-02ee2ddab7fe"
+    var pubKey = "demo"
+    var subKey = "demo"
     var authKey = ""
+    var sync_db = "betaHome"
     
     func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
         PubNub.setDelegate(self)

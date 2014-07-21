@@ -10,10 +10,10 @@ import UIKit
 
 class SwitchViewController: UIViewController {
     
-    @IBOutlet var doorSwitch: UIButton
-    @IBOutlet var lightSwitch: UIButton
-    @IBOutlet var musicSwitch: UIButton
-    @IBOutlet var garageSwitch: UIButton
+    @IBOutlet var doorSwitch: UIButton!
+    @IBOutlet var lightSwitch: UIButton!
+    @IBOutlet var musicSwitch: UIButton!
+    @IBOutlet var garageSwitch: UIButton!
     
     override func viewDidLoad() {
         var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
@@ -21,13 +21,14 @@ class SwitchViewController: UIViewController {
         PubNub.setConfiguration(myConfig)
         PubNub.connect()
         
-        PubNub.startObjectSynchronization("ericHouse")
+        PubNub.startObjectSynchronization(appDelegate.sync_db)
         
         PNObservationCenter.defaultCenter().addObjectSynchronizationStartObserver(self) { (syncObject: PNObject!, error: PNError!) in
             if !error {
                 self.updateAllSwitches(syncObject)
             } else {
                 println("OBSERVER: \(error.code)")
+                println("OBSERVER: \(error.description)")
             }
         }
         
@@ -58,51 +59,57 @@ class SwitchViewController: UIViewController {
     }
     
     @IBAction func doorSwitch(sender: UIButton) {
+        var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         if sender.tag == 0 {
             sender.tag = 1
-            PubNub.updateObject("ericHouse", withData: ["door":1])
+            PubNub.updateObject(appDelegate.sync_db, withData: ["door":1])
         } else {
             sender.tag = 0
-            PubNub.updateObject("ericHouse", withData: ["door":0])
+            PubNub.updateObject(appDelegate.sync_db, withData: ["door":0])
         }
         updateSwitch(sender, type: "Doors")
     }
     
     @IBAction func lightSwitch(sender: UIButton) {
+        var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         if sender.tag == 0 {
             sender.tag = 1
-            PubNub.updateObject("ericHouse", withData: ["light":1])
+            PubNub.updateObject(appDelegate.sync_db, withData: ["light":1])
         } else {
             sender.tag = 0
-            PubNub.updateObject("ericHouse", withData: ["light":0])
+            PubNub.updateObject(appDelegate.sync_db, withData: ["light":0])
         }
         updateSwitch(sender, type: "Lights")
     }
     
     @IBAction func musicSwitch(sender: UIButton) {
+        var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         if sender.tag == 0 {
             sender.tag = 1
-            PubNub.updateObject("ericHouse", withData: ["music":1])
+            PubNub.updateObject(appDelegate.sync_db, withData: ["music":1])
         } else {
             sender.tag = 0
-            PubNub.updateObject("ericHouse", withData: ["music":0])
+            PubNub.updateObject(appDelegate.sync_db, withData: ["music":0])
         }
         updateSwitch(sender, type: "Music")
     }
     
     @IBAction func garageSwitch(sender: UIButton) {
+        var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         if sender.tag == 0 {
             sender.tag = 1
-            PubNub.updateObject("ericHouse", withData: ["garage":1])
+            PubNub.updateObject(appDelegate.sync_db, withData: ["garage":1])
         } else {
             sender.tag = 0
-            PubNub.updateObject("ericHouse", withData: ["garage":0])
+            PubNub.updateObject(appDelegate.sync_db, withData: ["garage":0])
         }
         updateSwitch(sender, type: "Car")
     }
     
     func syncUpdateCompletionHandler(mods: PNObjectModificationInformation!, error: PNError!) {
-        
+        if error {
+            println(error.description)
+        }
     }
     
     func updateSwitch(button: UIButton, type: String) {

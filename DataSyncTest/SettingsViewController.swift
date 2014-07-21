@@ -10,9 +10,9 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    @IBOutlet var pubField: UITextField
-    @IBOutlet var subField: UITextField
-    @IBOutlet var authField: UITextField
+    @IBOutlet var pubField: UITextField!
+    @IBOutlet var subField: UITextField!
+    @IBOutlet var authField: UITextField!
     
     var appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     
